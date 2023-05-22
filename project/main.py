@@ -4,7 +4,6 @@ from sqlalchemy import asc
 from . import db
 
 main = Blueprint('main', __name__)
-
 #Show all restaurants
 @main.route('/')
 @main.route('/restaurant/')
