@@ -2,6 +2,13 @@ from project import db, create_app, models
 from project.models import Restaurant, MenuItem, User
 
 def populate_db():
+    #Admin account
+    session = db.session()
+    
+    Admin1 = User(firstName = "admin", lastName = "admin", email = "admin@admin",password = "admin")
+    session.add(Admin1)
+    session.commit()
+
     #Menu for UrbanBurger
     restaurant1 = Restaurant(name = "Urban Burger")
 
