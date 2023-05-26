@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, login_user, logout_user
 from .models import Restaurant, MenuItem
 from sqlalchemy import asc
 from . import db
@@ -111,3 +111,21 @@ def deleteMenuItem(restaurant_id,menu_id):
 @main.route('/login')
 def login():
     return render_template('login.html')
+
+@main.route('/login', methods=['POST'])
+def login_post():
+    firstName = request.form.get('firstName')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+
+    # check if the user actually exists
+    # take the user-supplied password and compare it with the stored password
+    if not email or not password:
+        flash('Please check your login details and try again.')
+        current_app.logger.warning("User login failed")
+        return redirect(url_for('main.login')) # if the user doesn't exist or password is wrong, reload the page
+
+    # if the above check passes, then we know the user has the right credentials
+    login_user(firstName)
+    return redirect(url_for('main'))
