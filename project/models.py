@@ -38,6 +38,7 @@ class User(db.Model):
     lastName = db.Column(db.String(20), nullable = False)
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String, nullable = False)
+    password = db.Column(db.String, nullable = False)
 
     @property
     def serialize(self):
@@ -47,6 +48,7 @@ class User(db.Model):
            'lastName'          : self.lastName,
            'id'                : self.id,
            'email'             : self.email,
-           'role'              : self.role,     
+           'role'              : self.role,    
+           'password'          : self.password, 
        }
 
