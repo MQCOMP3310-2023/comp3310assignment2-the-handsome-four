@@ -1,4 +1,5 @@
 from . import db
+from flask_login import UserMixin
 
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,7 +34,7 @@ class MenuItem(db.Model):
            'course'     : self.course,
        }
 
-class User(db.Model):
+class User(UserMixin,db.Model):
     firstName = db.Column(db.String(20), nullable = False)
     lastName = db.Column(db.String(20), nullable = False)
     id = db.Column(db.Integer, primary_key = True)
