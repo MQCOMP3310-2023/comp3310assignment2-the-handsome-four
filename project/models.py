@@ -35,8 +35,7 @@ class MenuItem(db.Model):
        }
 
 class User(UserMixin,db.Model):
-    firstName = db.Column(db.String(20), nullable = False)
-    lastName = db.Column(db.String(20), nullable = False)
+    name = db.Column(db.String(20), nullable = False)
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String, nullable = False)
     password = db.Column(db.String, nullable = False)
@@ -45,8 +44,7 @@ class User(UserMixin,db.Model):
     def serialize(self):
        """Return object data in easily serializeable format"""
        return {
-           'firstName'         : self.firstName,
-           'lastName'          : self.lastName,
+           'name'              : self.name,
            'id'                : self.id,
            'email'             : self.email,
            'role'              : self.role,    

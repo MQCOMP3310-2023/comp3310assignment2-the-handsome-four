@@ -4,8 +4,8 @@ from project.models import Restaurant, MenuItem, User
 def populate_db():
     #Admin account
     session = db.session()
-    
-    Admin1 = User(firstName = "admin", lastName = "admin", email = "admin@admin",password = "admin")
+
+    Admin1 = User(name = "admin", email = "admin@admin",password = "admin")
     session.add(Admin1)
     session.commit()
 

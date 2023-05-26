@@ -133,4 +133,4 @@ def login_post():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.firstName)
+    return render_template('profile.html', name=current_user.name)
