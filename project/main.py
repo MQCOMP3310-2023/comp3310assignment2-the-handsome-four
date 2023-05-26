@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_required, current_user, login_user,logout_user
+from flask_login import login_required, current_user, login_user, logout_user
 from .models import Restaurant, MenuItem, User
 from sqlalchemy import asc
 from . import db
@@ -128,4 +128,4 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user)
-    return redirect(url_for('main'))
+    return redirect(url_for('main.login'))
