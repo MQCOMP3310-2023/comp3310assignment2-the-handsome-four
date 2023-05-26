@@ -1,3 +1,6 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 <div>
     <h3 class="title"> Login</h3>
     <form method="POST" action="/login">
@@ -18,3 +21,4 @@
         </div>
     </form>
 <div>
+{% endblock %}
