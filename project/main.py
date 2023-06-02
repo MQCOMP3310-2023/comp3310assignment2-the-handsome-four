@@ -108,10 +108,12 @@ def deleteMenuItem(restaurant_id,menu_id):
     else:
         return render_template('deleteMenuItem.html', item = itemToDelete)
 
+#login
 @main.route('/login')
 def login():
     return render_template('login.html')
 
+#login is as a user
 @main.route('/login', methods=['POST'])
 def login_post():
 
@@ -128,16 +130,18 @@ def login_post():
     # user is logged in and redirects to the profile page
     login_user(user)
     return redirect(url_for('main.profile'))
-
+# profile page
 @main.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
 
+# signup page
 @main.route('/signup')
 def signup():
     return render_template('signup.html')
 
+#sign up as a user
 @main.route('/signup', methods=['POST'])
 def signup_post():
     email = request.form.get('email')
@@ -157,6 +161,7 @@ def signup_post():
 
     return redirect(url_for('main.login'))
 
+#logout
 @main.route('/logout')
 @login_required
 def logout():
