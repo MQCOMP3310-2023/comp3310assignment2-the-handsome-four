@@ -1,5 +1,6 @@
 from . import db
 from flask_login import UserMixin
+from sqlalchemy import ForeignKey
 
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -51,10 +52,10 @@ class User(UserMixin,db.Model):
            'password'          : self.password, 
        }
 
-class Rating(db.model):
-    id = db.Column(db.Integer, foreign_key=True)
+class Rating(db.Model):
+    id = db.Column(db.Integer, ForeignKey(Restaurant.id), primary_key=True)
     rating_id = db.Column(db.Integer, primary_key=True)
-    rating = db.column(db.Integer, nullable = False)
+    rating = db.column(db.Integer)
 
     @property
     def serialize(self):
