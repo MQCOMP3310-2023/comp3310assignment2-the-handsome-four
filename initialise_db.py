@@ -14,7 +14,7 @@ def populate_db():
 
     session = db.session()
 
-    rating1 = Rating(id = "1", u_id = "1",rating_id = "1", score = "5")
+    rating1 = Rating(r_id = "1", u_id = "1", score = "5")
     session.add(rating1)
     session.commit()
 

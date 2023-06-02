@@ -55,18 +55,21 @@ class User(UserMixin,db.Model):
        }
 
 class Rating(db.Model):
-    id = db.Column(db.Integer, ForeignKey(Restaurant.id), primary_key=True)
-    u_id = db.Column(db.Integer, ForeignKey(User.u_id), primary_key=True)
     rating_id = db.Column(db.Integer, primary_key=True)
+    r_id = db.Column(db.Integer, ForeignKey(Restaurant.id))
+    u_id = db.Column(db.Integer, ForeignKey(User.u_id))
     score = db.Column(db.Float)
+
+    def get_id(self):
+        return (self.rating_id)
 
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'id'            :self.id,
-            'u_id'          :self.u_id,
             'rating_id'     :self.rating_id,
+            'r_id'            :self.r_id,
+            'u_id'          :self.u_id,
             'score'         :self.score,
         }
 
