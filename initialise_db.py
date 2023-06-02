@@ -1,11 +1,12 @@
 from project import db, create_app, models
 from project.models import Restaurant, MenuItem, User, Rating
+from werkzeug.security import generate_password_hash, check_password_hash
 
 def populate_db():
     #Admin account
     session = db.session()
 
-    Admin1 = User(name = "admin", email = "admin@admin",password = "admin")
+    Admin1 = User(name = "admin", email = "admin@admin",password = generate_password_hash("admin", method='sha256'))
     session.add(Admin1)
     session.commit()
 
