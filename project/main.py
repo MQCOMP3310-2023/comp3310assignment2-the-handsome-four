@@ -122,7 +122,7 @@ def login_post():
 
     # check if the user actually exists
     # take the user-supplied password and compare it with the stored password
-    if not user or not password:
+    if not user or not (check_password_hash(user.password, password)):
         flash('Please check your login details and try again.')
         current_app.logger.warning("User login failed")
         return redirect(url_for('main.login')) # if the user doesn't exist or password is wrong, reload the page
