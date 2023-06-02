@@ -109,12 +109,39 @@ def deleteMenuItem(restaurant_id,menu_id):
         return render_template('deleteMenuItem.html', item = itemToDelete)
     
 @main.route('/restaurant/<int:restaurant_id>/menu/1')
-def rating(restaurant_id):
+def rating1(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
     db.session.add(newRating)
     db.session.commit()
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
             
+@main.route('/restaurant/<int:restaurant_id>/menu/2')
+def rating2(restaurant_id):
+    newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 2)
+    db.session.add(newRating)
+    db.session.commit()
+    return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
+
+@main.route('/restaurant/<int:restaurant_id>/menu/3')
+def rating3(restaurant_id):
+    newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 3)
+    db.session.add(newRating)
+    db.session.commit()
+    return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
+
+@main.route('/restaurant/<int:restaurant_id>/menu/4')
+def rating4(restaurant_id):
+    newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 4)
+    db.session.add(newRating)
+    db.session.commit()
+    return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
+
+@main.route('/restaurant/<int:restaurant_id>/menu/5')
+def rating5(restaurant_id):
+    newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 5)
+    db.session.add(newRating)
+    db.session.commit()
+    return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
 #login
 @main.route('/login')
