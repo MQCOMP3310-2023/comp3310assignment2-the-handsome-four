@@ -1,5 +1,5 @@
 from project import db, create_app, models
-from project.models import Restaurant, MenuItem, User
+from project.models import Restaurant, MenuItem, User, Rating
 
 def populate_db():
     #Admin account
@@ -7,6 +7,14 @@ def populate_db():
 
     Admin1 = User(name = "admin", email = "admin@admin",password = "admin")
     session.add(Admin1)
+    session.commit()
+
+    #Restaurant ratings
+
+    session = db.session()
+
+    rating1 = Rating(id = "1", u_id = "1",rating_id = "1", score = "5")
+    session.add(rating1)
     session.commit()
 
     #Menu for UrbanBurger

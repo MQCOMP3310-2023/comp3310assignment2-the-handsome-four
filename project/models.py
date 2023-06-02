@@ -37,32 +37,36 @@ class MenuItem(db.Model):
 
 class User(UserMixin,db.Model):
     name = db.Column(db.String(20), nullable = False)
-    id = db.Column(db.Integer, primary_key = True)
+    u_id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String, nullable = False)
     password = db.Column(db.String, nullable = False)
+
+    def get_id(self):
+        return (self.u_id)
 
     @property
     def serialize(self):
        """Return object data in easily serializeable format"""
        return {
            'name'              : self.name,
-           'id'                : self.id,
-           'email'             : self.email,
-           'role'              : self.role,    
+           'u_id'                : self.u_id,
+           'email'             : self.email,    
            'password'          : self.password, 
        }
 
 class Rating(db.Model):
     id = db.Column(db.Integer, ForeignKey(Restaurant.id), primary_key=True)
+    u_id = db.Column(db.Integer, ForeignKey(User.u_id), primary_key=True)
     rating_id = db.Column(db.Integer, primary_key=True)
-    rating = db.column(db.Integer)
+    score = db.Column(db.Float)
 
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
             'id'            :self.id,
+            'u_id'          :self.u_id,
             'rating_id'     :self.rating_id,
-            'rating'        :self.rating
+            'score'         :self.score,
         }
 
