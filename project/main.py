@@ -107,6 +107,14 @@ def deleteMenuItem(restaurant_id,menu_id):
         return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
     else:
         return render_template('deleteMenuItem.html', item = itemToDelete)
+    
+@main.route('/restaurant/<int:restaurant_id>/menu/1')
+def rating(restaurant_id):
+    newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
+    db.session.add(newRating)
+    db.session.commit()
+    return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
+            
 
 #login
 @main.route('/login')
