@@ -134,3 +134,28 @@ def login_post():
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+
+@main.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+@main.route('/signup', methods=['POST'])
+def signup_post():
+    email = request.form.get('email')
+    name = request.form.get('name')
+    password = request.form.get('password')
+    #password = generate_password_hash(password, method='sha256')
+    user = db.session.execute(text('select * from user where email = "' + "?" +'"')).all()
+    if len(user) > 0: # if a user is found, we want to redirect back to signup page so user can try again
+        flash('Email address already exists')  # 'flash' function stores a message accessible in the template code.
+        current_app.logger.debug("User email already exists")
+        return redirect(url_for('main.signup'))
+
+    # create a new user with the form data. TODO: Hash the password so the plaintext version isn't saved.
+    new_user = User(email=email, name=name, password=password)
+
+    # add the new user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('main.login'))
