@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="box">
+        <form method="POST" action="/signup">
+                <div>
+                <label for="email"><b>Email</b></label>
+                </div>
+                <div>
+                <input type="email" name="email">
+                </div>
+                <div>
+                <label for="password"><b>Password</b></label>
+                </div>
+                <div>
+                <input type="password" name="password">
+                </div>
+                <div>
+                <button type="submit">signup</button>
+                </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
