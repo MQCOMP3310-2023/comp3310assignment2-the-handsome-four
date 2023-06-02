@@ -51,3 +51,17 @@ class User(UserMixin,db.Model):
            'password'          : self.password, 
        }
 
+class Rating(db.model):
+    id = db.Column(db.Integer, foreign_key=True)
+    rating_id = db.Column(db.Integer, primary_key=True)
+    rating = db.column(db.Integer, nullable = False)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id'            :self.id,
+            'rating_id'     :self.rating_id,
+            'rating'        :self.rating
+        }
+
