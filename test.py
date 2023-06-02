@@ -41,3 +41,22 @@ class WebsiteTests(unittest.TestCase):
             'name' : '<script>alert("test user")</script>',
         }, follow_redirects = True)
         assert response.status_code == 200 
+
+    def test_register_user(self):
+        response = self.client.post('/signup', data = {
+            'email' : 'JohnSmith@test.com',
+            'name' : 'John Smith',
+            'password' : 'test123'
+        }, follow_redirects = True)
+        assert response.status_code == 200
+        assert response.request.path == '/login'
+
+        response = self.client.post('/login', data = {
+            'email' : 'John Smith@test.com',
+            'password' : 'test123'
+        }, follow_redirects = True)
+        assert response.status_code == 200
+
+        response = self.client.get('/profile')
+        html = response.get_data(as_text = True)
+        assert 'John Smith' in html
