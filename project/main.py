@@ -160,3 +160,9 @@ def signup_post():
     db.session.commit()
 
     return redirect(url_for('main.login'))
+
+@main.route('/logout')
+@login_required
+def logout():
+    logout_user();
+    return redirect(url_for('main.showRestaurants'))
