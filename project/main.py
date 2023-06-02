@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_required, current_user, login_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from .models import Restaurant, MenuItem, User
-from sqlalchemy import asc
+from sqlalchemy import asc, text
 from . import db
 
 main = Blueprint('main', __name__)
@@ -144,7 +145,7 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-    #password = generate_password_hash(password, method='sha256')
+    password = generate_password_hash(password, method='sha256')
     user = db.session.execute(text('select * from user where email = "' + "?" +'"')).all()
     if len(user) > 0: # if a user is found, we want to redirect back to signup page so user can try again
         flash('Email address already exists')  # 'flash' function stores a message accessible in the template code.
