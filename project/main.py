@@ -144,8 +144,8 @@ def signup_post():
     name = request.form.get('name')
     password = request.form.get('password')
     password = generate_password_hash(password, method='sha256')
-    user = db.session.execute(text('select * from user where email = "?"')).first()
-    if len(user) > 0: # TODO Fix so multiple accounts with same credentials cannot be created
+    user = db.session.execute(text('select * from user where email = "?"')).all()
+    if len(user) > 0: 
         flash('Email address already exists')  
         current_app.logger.debug("User email already exists")
         return redirect(url_for('main.signup'))
