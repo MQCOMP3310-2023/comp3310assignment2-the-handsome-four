@@ -112,13 +112,16 @@ def deleteMenuItem(restaurant_id,menu_id):
 def rating1(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
     db.session.add(newRating)
+    flash('only 1 :(')
     db.session.commit()
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
+    
             
 @main.route('/restaurant/<int:restaurant_id>/menu/2/')
 def rating2(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 2)
     db.session.add(newRating)
+    flash('2...really')
     db.session.commit()
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
@@ -126,6 +129,7 @@ def rating2(restaurant_id):
 def rating3(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 3)
     db.session.add(newRating)
+    flash('guess we can do better')
     db.session.commit()
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
@@ -133,6 +137,7 @@ def rating3(restaurant_id):
 def rating4(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 4)
     db.session.add(newRating)
+    flash('good enuf')
     db.session.commit()
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
@@ -140,6 +145,7 @@ def rating4(restaurant_id):
 def rating5(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 5)
     db.session.add(newRating)
+    flash('thank you for the rating!!!')
     db.session.commit()
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
