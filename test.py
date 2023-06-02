@@ -41,7 +41,7 @@ class WebsiteTests(unittest.TestCase):
             'name' : '<script>alert("test user")</script>',
         }, follow_redirects = True)
         assert response.status_code == 200 
-
+# signs up a new user
     def test_register_user(self):
         response = self.client.post('/signup', data = {
             'email' : 'JohnSmith@test.com',
@@ -50,13 +50,12 @@ class WebsiteTests(unittest.TestCase):
         }, follow_redirects = True)
         assert response.status_code == 200
         assert response.request.path == '/login'
-
+# redirects to login, and logsin with new user
         response = self.client.post('/login', data = {
-            'email' : 'John Smith@test.com',
+            'email' : 'JohnSmith@test.com',
             'password' : 'test123'
         }, follow_redirects = True)
         assert response.status_code == 200
-
-        response = self.client.get('/profile')
+# redirects to profile to find name on screen
         html = response.get_data(as_text = True)
         assert 'John Smith' in html
