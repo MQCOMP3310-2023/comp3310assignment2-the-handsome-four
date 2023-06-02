@@ -15,6 +15,7 @@ def showRestaurants():
 
 #Create a new restaurant
 @main.route('/restaurant/new/', methods=['GET','POST'])
+@login_required
 def newRestaurant():
   if request.method == 'POST':
       newRestaurant = Restaurant(name = request.form['name'])
@@ -27,6 +28,7 @@ def newRestaurant():
 
 #Edit a restaurant
 @main.route('/restaurant/<int:restaurant_id>/edit/', methods = ['GET', 'POST'])
+@login_required
 def editRestaurant(restaurant_id):
   editedRestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
   if request.method == 'POST':
@@ -40,6 +42,7 @@ def editRestaurant(restaurant_id):
 
 #Delete a restaurant
 @main.route('/restaurant/<int:restaurant_id>/delete/', methods = ['GET','POST'])
+@login_required
 def deleteRestaurant(restaurant_id):
   restaurantToDelete = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
   if request.method == 'POST':
@@ -62,6 +65,7 @@ def showMenu(restaurant_id):
 
 #Create a new menu item
 @main.route('/restaurant/<int:restaurant_id>/menu/new/',methods=['GET','POST'])
+@login_required
 def newMenuItem(restaurant_id):
   restaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
   if request.method == 'POST':
@@ -75,6 +79,7 @@ def newMenuItem(restaurant_id):
 
 #Edit a menu item
 @main.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit', methods=['GET','POST'])
+@login_required
 def editMenuItem(restaurant_id, menu_id):
 
     editedItem = db.session.query(MenuItem).filter_by(id = menu_id).one()
@@ -97,6 +102,7 @@ def editMenuItem(restaurant_id, menu_id):
 
 #Delete a menu item
 @main.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods = ['GET','POST'])
+@login_required
 def deleteMenuItem(restaurant_id,menu_id):
     restaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
     itemToDelete = db.session.query(MenuItem).filter_by(id = menu_id).one() 
@@ -109,6 +115,7 @@ def deleteMenuItem(restaurant_id,menu_id):
         return render_template('deleteMenuItem.html', item = itemToDelete)
     
 @main.route('/restaurant/<int:restaurant_id>/menu/1/')
+@login_required
 def rating1(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
     db.session.add(newRating)
@@ -118,6 +125,7 @@ def rating1(restaurant_id):
     
             
 @main.route('/restaurant/<int:restaurant_id>/menu/2/')
+@login_required
 def rating2(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 2)
     db.session.add(newRating)
@@ -126,6 +134,7 @@ def rating2(restaurant_id):
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
 @main.route('/restaurant/<int:restaurant_id>/menu/3/')
+@login_required
 def rating3(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 3)
     db.session.add(newRating)
@@ -134,6 +143,7 @@ def rating3(restaurant_id):
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
 @main.route('/restaurant/<int:restaurant_id>/menu/4/')
+@login_required
 def rating4(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 4)
     db.session.add(newRating)
@@ -142,6 +152,7 @@ def rating4(restaurant_id):
     return redirect(url_for('main.showMenu', restaurant_id = restaurant_id))
 
 @main.route('/restaurant/<int:restaurant_id>/menu/5/')
+@login_required
 def rating5(restaurant_id):
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 5)
     db.session.add(newRating)
