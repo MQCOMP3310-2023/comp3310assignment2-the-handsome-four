@@ -59,3 +59,19 @@ class WebsiteTests(unittest.TestCase):
 # redirects to profile to find name on screen
         html = response.get_data(as_text = True)
         assert 'John Smith' in html
+
+    def test_sql_injection_signup(self):
+        response = self.client.post('/signup', data = {
+            'email' : 'user@test.com"; drop table user; -- ',
+            'name' : 'test user',
+            'password' : 'test123'
+        }, follow_redirects = True)
+        assert response.status_code == 200 
+
+    def test_xss_vulnerability_signup(self):
+        response = self.client.post('/signup', data = {
+            'email' : 'user@test.com',
+            'name' : '<script>alert("test user")</script>',
+            'password' : 'test123'
+        }, follow_redirects = True)
+        assert response.status_code == 200 
