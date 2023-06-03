@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import Restaurant, MenuItem, User, Rating
+from .models import Restaurant, MenuItem, User, Rating, Booking
+from datetime import datetime
 from sqlalchemy import asc, text
 from . import db
 
@@ -219,3 +220,23 @@ def signup_post():
 def logout():
     logout_user();
     return redirect(url_for('main.showRestaurants'))
+
+#booking
+@main.route('/restaurant/<int:restaurant_id>/create_booking', methods=['GET', 'POST'])
+@login_required
+def create_booking(restaurant_id):  # restaurant_id is automatically passed as argument
+    if request.method == 'POST':
+        booking_time_str = request.form.get('booking_time')
+
+        # Convert the string date/time to a Python datetime object.
+        booking_time = datetime.strptime(booking_time_str, '%Y-%m-%dT%H:%M')
+
+        # Create and save the booking
+        booking = Booking(restaurant_id=restaurant_id, user_id=current_user.u_id, booking_time=booking_time)
+        db.session.add(booking)
+        db.session.commit()
+
+        flash('Booking created successfully')
+        return redirect(url_for('main.profile'))
+
+    return render_template('createBooking.html', restaurant_id=restaurant_id)

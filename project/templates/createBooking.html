@@ -1,0 +1,5 @@
+<form method="POST" action="{{ url_for('main.create_booking', restaurant_id=restaurant_id) }}">
+  <label for="booking_time">Booking Time:</label><br>
+  <input type="datetime-local" id="booking_time" name="booking_time"><br>
+  <input type="submit" value="Submit">
+</form>

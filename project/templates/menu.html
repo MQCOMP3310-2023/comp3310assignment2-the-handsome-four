@@ -50,6 +50,11 @@
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete Restaurant
 				</button>
 			</a>
+			<a href="{{url_for('main.create_booking', restaurant_id=restaurant.id )}}">
+				<button class="btn btn-default" id="new-menu-item">
+					<span class="glyphicon glyphicon-book" aria-hidden="true"></span>Book a Table
+				</button>
+			</a>
 			{% endif %}
 			
 			<!-- using a drop down menu to limit user imput -->

@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey
+from datetime import datetime
 
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -72,4 +73,22 @@ class Rating(db.Model):
             'u_id'          :self.u_id,
             'score'         :self.score,
         }
+    
+class Booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.u_id'), nullable=False)
+    booking_time = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
+    restaurant = db.relationship('Restaurant', backref=db.backref('bookings', lazy=True))
+    user = db.relationship('User', backref=db.backref('bookings', lazy=True))
+
+    @property
+    def serialize(self):
+       """Return object data in easily serializeable format"""
+       return {
+           'id'              : self.id,
+           'restaurant_id'   : self.restaurant_id,
+           'user_id'         : self.user_id,
+           'booking_time'    : self.booking_time,
+       }
