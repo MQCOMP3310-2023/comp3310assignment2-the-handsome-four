@@ -121,7 +121,7 @@ def deleteMenuItem(restaurant_id,menu_id):
 def rating1(restaurant_id):
     maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
     if maxrestaurant is None:
-        flash('no restuarant id like that')
+        flash('Restuarant ID Does Not Exists')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
     db.session.add(newRating)
@@ -135,7 +135,7 @@ def rating1(restaurant_id):
 def rating2(restaurant_id):
     maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
     if maxrestaurant is None:
-        flash('no restuarant id like that')
+        flash('Restuarant ID Does Not Exists')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 2)
     db.session.add(newRating)
@@ -148,7 +148,7 @@ def rating2(restaurant_id):
 def rating3(restaurant_id):
     maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
     if maxrestaurant is None:
-        flash('no restuarant id like that')
+        flash('Restuarant ID Does Not Exists')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 3)
     db.session.add(newRating)
@@ -161,7 +161,7 @@ def rating3(restaurant_id):
 def rating4(restaurant_id):
     maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
     if maxrestaurant is None:
-        flash('no restuarant id like that')
+        flash('Restuarant ID Does Not Exists')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 4)
     db.session.add(newRating)
@@ -174,7 +174,7 @@ def rating4(restaurant_id):
 def rating5(restaurant_id):
     maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
     if maxrestaurant is None:
-        flash('no restuarant id like that')
+        flash('Restuarant ID Does Not Exists')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 5)
     db.session.add(newRating)
