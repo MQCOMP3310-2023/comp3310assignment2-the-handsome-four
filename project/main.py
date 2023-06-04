@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import Restaurant, MenuItem, User, Rating, Booking
 from datetime import datetime, timedelta
 from sqlalchemy import asc, text
+from sqlalchemy.orm import sessionmaker
 from . import db
 
 main = Blueprint('main', __name__)
@@ -105,7 +106,7 @@ def editMenuItem(restaurant_id, menu_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods = ['GET','POST'])
 @login_required
 def deleteMenuItem(restaurant_id,menu_id):
-    restaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
     itemToDelete = db.session.query(MenuItem).filter_by(id = menu_id).one() 
     if request.method == 'POST':
         db.session.delete(itemToDelete)
@@ -118,6 +119,10 @@ def deleteMenuItem(restaurant_id,menu_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/1/')
 @login_required
 def rating1(restaurant_id):
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
+    if restaurant_id > maxrestaurant or restaurant_id < 0:
+        flash('no restuarant id like that')
+        return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
     db.session.add(newRating)
     flash('only 1 :(')
@@ -128,6 +133,10 @@ def rating1(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/2/')
 @login_required
 def rating2(restaurant_id):
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
+    if restaurant_id > maxrestaurant or restaurant_id < 0:
+        flash('no restuarant id like that')
+        return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 2)
     db.session.add(newRating)
     flash('2...really')
@@ -137,6 +146,10 @@ def rating2(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/3/')
 @login_required
 def rating3(restaurant_id):
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
+    if restaurant_id > maxrestaurant or restaurant_id < 0:
+        flash('no restuarant id like that')
+        return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 3)
     db.session.add(newRating)
     flash('guess we can do better')
@@ -146,6 +159,10 @@ def rating3(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/4/')
 @login_required
 def rating4(restaurant_id):
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
+    if restaurant_id > maxrestaurant or restaurant_id < 0:
+        flash('no restuarant id like that')
+        return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 4)
     db.session.add(newRating)
     flash('good enuf')
@@ -155,6 +172,11 @@ def rating4(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/5/')
 @login_required
 def rating5(restaurant_id):
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
+    if restaurant_id > maxrestaurant or restaurant_id < 0:
+        flash('no restuarant id like that')
+        current_app.logger.warning("no restaurant id")
+        return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 5)
     db.session.add(newRating)
     flash('thank you for the rating!!!')
