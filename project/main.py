@@ -106,7 +106,7 @@ def editMenuItem(restaurant_id, menu_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods = ['GET','POST'])
 @login_required
 def deleteMenuItem(restaurant_id,menu_id):
-    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
+    restaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).one()
     itemToDelete = db.session.query(MenuItem).filter_by(id = menu_id).one() 
     if request.method == 'POST':
         db.session.delete(itemToDelete)
@@ -119,8 +119,8 @@ def deleteMenuItem(restaurant_id,menu_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/1/')
 @login_required
 def rating1(restaurant_id):
-    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
-    if restaurant_id > maxrestaurant or restaurant_id < 0:
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
+    if maxrestaurant is None:
         flash('no restuarant id like that')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 1)
@@ -133,8 +133,8 @@ def rating1(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/2/')
 @login_required
 def rating2(restaurant_id):
-    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
-    if restaurant_id > maxrestaurant or restaurant_id < 0:
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
+    if maxrestaurant is None:
         flash('no restuarant id like that')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 2)
@@ -146,8 +146,8 @@ def rating2(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/3/')
 @login_required
 def rating3(restaurant_id):
-    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
-    if restaurant_id > maxrestaurant or restaurant_id < 0:
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
+    if maxrestaurant is None:
         flash('no restuarant id like that')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 3)
@@ -159,8 +159,8 @@ def rating3(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/4/')
 @login_required
 def rating4(restaurant_id):
-    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
-    if restaurant_id > maxrestaurant or restaurant_id < 0:
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
+    if maxrestaurant is None:
         flash('no restuarant id like that')
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 4)
@@ -172,10 +172,9 @@ def rating4(restaurant_id):
 @main.route('/restaurant/<int:restaurant_id>/menu/5/')
 @login_required
 def rating5(restaurant_id):
-    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).count()
-    if restaurant_id > maxrestaurant or restaurant_id < 0:
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
+    if maxrestaurant is None:
         flash('no restuarant id like that')
-        current_app.logger.warning("no restaurant id")
         return redirect(url_for('main.showRestaurants'))
     newRating = Rating(r_id=restaurant_id,u_id = current_user.u_id, score = 5)
     db.session.add(newRating)
@@ -247,6 +246,10 @@ def logout():
 @main.route('/restaurant/<int:restaurant_id>/create_booking', methods=['GET', 'POST'])
 @login_required
 def create_booking(restaurant_id):
+    maxrestaurant = db.session.query(Restaurant).filter_by(id = restaurant_id).first()
+    if maxrestaurant is None:
+        flash('no restuarant id like that')
+        return redirect(url_for('main.showRestaurants'))
     if request.method == 'POST':
         booking_time_str = request.form.get('booking_time')
 
