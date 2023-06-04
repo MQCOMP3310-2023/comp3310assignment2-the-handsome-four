@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import Restaurant, MenuItem, User, Rating, Booking
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import asc, text
 from . import db
 
@@ -224,12 +224,16 @@ def logout():
 #booking
 @main.route('/restaurant/<int:restaurant_id>/create_booking', methods=['GET', 'POST'])
 @login_required
-def create_booking(restaurant_id):  # restaurant_id is automatically passed as argument
+def create_booking(restaurant_id):
     if request.method == 'POST':
         booking_time_str = request.form.get('booking_time')
 
         # Convert the string date/time to a Python datetime object.
         booking_time = datetime.strptime(booking_time_str, '%Y-%m-%dT%H:%M')
+        current_time = datetime.now()
+        if booking_time < current_time or booking_time > current_time + timedelta(days=365):
+            flash('Invalid booking time. Please enter a valid date.')
+            return redirect(url_for('main.create_booking', restaurant_id=restaurant_id))
 
         # Create and save the booking
         booking = Booking(restaurant_id=restaurant_id, user_id=current_user.u_id, booking_time=booking_time)
@@ -237,6 +241,6 @@ def create_booking(restaurant_id):  # restaurant_id is automatically passed as a
         db.session.commit()
 
         flash('Booking created successfully')
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('main.showRestaurants'))
 
     return render_template('createBooking.html', restaurant_id=restaurant_id)
